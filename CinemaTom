@@ -1,0 +1,412 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071225">
+<title>CinemaTOM</title>
+
+<style>
+:root {
+  --bg: #071225;
+  --panel: #101e36;
+  --blue: #3985f6;
+  --blue-light: #78b1ff;
+  --text: #f4f7ff;
+  --muted: #9aacc8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at top, #193969 0%, transparent 48%), var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+  padding: 22px 18px;
+  background: rgba(5, 15, 32, .94);
+  border-bottom: 1px solid rgba(120, 177, 255, .18);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  backdrop-filter: blur(14px);
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.logo {
+  margin: 0;
+  font-size: 27px;
+  letter-spacing: 1px;
+  font-weight: 900;
+}
+
+.logo span {
+  color: var(--blue-light);
+}
+
+.online {
+  font-size: 12px;
+  color: #8fe0b2;
+  background: rgba(55, 190, 120, .12);
+  border: 1px solid rgba(100, 220, 160, .25);
+  border-radius: 20px;
+  padding: 8px 12px;
+}
+
+main {
+  max-width: 1200px;
+  margin: auto;
+  padding: 24px 18px 45px;
+}
+
+.hero {
+  padding: 22px 0 25px;
+}
+
+.hero h2 {
+  font-size: clamp(27px, 5vw, 42px);
+  margin: 0 0 12px;
+}
+
+.hero p {
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 650px;
+}
+
+.search {
+  width: 100%;
+  margin: 12px 0 25px;
+  padding: 15px 17px;
+  background: var(--panel);
+  border: 1px solid #293c5c;
+  border-radius: 12px;
+  color: white;
+  font-size: 16px;
+  outline: none;
+}
+
+.search:focus {
+  border-color: var(--blue);
+}
+
+.section-title {
+  margin: 10px 0 18px;
+  font-size: 21px;
+}
+
+.movies {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+  gap: 20px;
+}
+
+.movie {
+  background: linear-gradient(160deg, #152744, #0d192e);
+  border: 1px solid rgba(150, 180, 230, .14);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform .2s, border-color .2s;
+}
+
+.movie:hover {
+  transform: translateY(-3px);
+  border-color: rgba(100, 160, 255, .65);
+}
+
+.poster {
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 15px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg, #174f91, #101b40 70%);
+}
+
+.poster::before {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 50%;
+  box-shadow: 0 0 0 25px rgba(255,255,255,.025),
+              0 0 0 50px rgba(255,255,255,.025);
+}
+
+.symbol {
+  z-index: 1;
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.poster-title {
+  position: relative;
+  z-index: 1;
+  font-size: 17px;
+  line-height: 1.2;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-shadow: 0 2px 9px #000;
+}
+
+.tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: rgba(4, 12, 26, .75);
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.sponge {
+  background: linear-gradient(145deg, #c18b16, #255e9b 75%);
+}
+
+.land {
+  background: linear-gradient(145deg, #2a9b9e, #153b76 70%);
+}
+
+.furioza {
+  background: linear-gradient(145deg, #8c272d, #171b2b 75%);
+}
+
+.pirate {
+  background: linear-gradient(145deg, #8b5529, #152a50 75%);
+}
+
+.plankton {
+  background: linear-gradient(145deg, #247e65, #151e48 75%);
+}
+
+.movie-info {
+  padding: 14px;
+}
+
+.movie h3 {
+  font-size: 15px;
+  line-height: 1.4;
+  min-height: 42px;
+  margin: 0 0 7px;
+}
+
+.movie-info p {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0 0 14px;
+}
+
+.play {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #438ef8, #2864d8);
+  color: white;
+  padding: 12px 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.play:active {
+  transform: scale(.98);
+}
+
+.empty {
+  display: none;
+  color: var(--muted);
+  padding: 25px 0;
+}
+
+footer {
+  text-align: center;
+  padding: 25px 15px;
+  color: #7e91b0;
+  border-top: 1px solid rgba(120, 177, 255, .12);
+  font-size: 12px;
+}
+
+@media (max-width: 420px) {
+  main {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .movies {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .poster {
+    height: 190px;
+  }
+
+  .movie-info {
+    padding: 10px;
+  }
+
+  .logo {
+    font-size: 23px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1 class="logo">Cinema<span>TOM</span></h1>
+    <div class="online">● ONLINE</div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <h2>Twój świat filmów</h2>
+    <p>Wybierz film z biblioteki CinemaTOM i naciśnij „Odtwórz”, aby otworzyć go na stronie zewnętrznego dostawcy.</p>
+  </section>
+
+  <input
+    id="search"
+    class="search"
+    type="search"
+    placeholder="Szukaj filmu..."
+    aria-label="Szukaj filmu"
+  >
+
+  <h2 class="section-title">Biblioteka filmów</h2>
+
+  <section class="movies" id="movies">
+
+    <article class="movie" data-title="spongebob na ratunek">
+      <div class="poster sponge">
+        <span class="tag">ANIMACJA</span>
+        <div class="symbol">★</div>
+        <div class="poster-title">SpongeBob<br>Na ratunek</div>
+      </div>
+      <div class="movie-info">
+        <h3>SpongeBob: Na ratunek</h3>
+        <p>Animacja · Online</p>
+        <a class="play"
+          href="https://play.ekino.link/Jng4konRQ4lryy8nJfDUTaucnM7gv3tc9dT81Pj6sO7XWdR5zEP8XHVPAr4ZMBGOmeqistWhuls6dpmO-AF3nRVGwyxjT51cBimFUykXw5EZxWVVZA0Zs-xK3BP0HiVb1n3qvgm7qfPuZik3ked-LXMJ9ZXrilIUtBZmvysZPbPopQgIMSCmHlXlnNTg-egZbhd_NjrsKIoGB4qVSuDbsSRYA88DZGxy3QsUhyh3Odw-ZO8VeGyOrE0gCKsf5ClF-LJVa5frah1HK5JYq62PfvUVIV-WFUHVp-uBGnUNvsouOy8lJsMNnyU2Lm9zhqCAAIrk"
+          target="_blank" rel="noopener noreferrer">Odtwórz</a>
+      </div>
+    </article>
+
+    <article class="movie" data-title="spongebob na suchym ladzie">
+      <div class="poster land">
+        <span class="tag">PRZYGODA</span>
+        <div class="symbol">◆</div>
+        <div class="poster-title">Na suchym<br>lądzie</div>
+      </div>
+      <div class="movie-info">
+        <h3>SpongeBob: Na suchym lądzie</h3>
+        <p>Animacja · Online</p>
+        <a class="play"
+          href="https://play.ekino.link/1u5QZuGefNYlJLebt4ntl1CoXRPuEyipuM7-xu2UNGMDI8gPemLsZ0UIt_DqSxrdlV-8IZX0ZMYnCXsncDUSMcz2iOzDmUIo9E5En3Vzu_v0pBM-yR_C5KpARCo8mYHfruwWi6MZisJEnAUa-nGjxpRmWQClXUZmhddSaQ_QYerGcoAziizU4bsdq4pusMSGM7q10Hkmf7TIm-QFvDw_xVcHobd_tcDOrjDSOUzgRSxw1kE65Ti03uKzBNxDqw8UXEMNVTdb66W7oygwVBzYhTMfGSkCC3iCWW_C1HvFV3Me7vVR2K7eZhee4BLD68TIyujCvZvohtFR"
+          target="_blank" rel="noopener noreferrer">Odtwórz</a>
+      </div>
+    </article>
+
+    <article class="movie" data-title="furioza 2">
+      <div class="poster furioza">
+        <span class="tag">AKCJA</span>
+        <div class="symbol">✦</div>
+        <div class="poster-title">Furioza 2</div>
+      </div>
+      <div class="movie-info">
+        <h3>Furioza 2</h3>
+        <p>Akcja · Online</p>
+        <a class="play"
+          href="https://play.ekino.link/m14j-SJb3GNA1K7m-akIyeKSGyl-nr_bTSyJJZvvb0kM2WmHY7IX2TiIbammMvzRQnkfLHBUwAANjI8Qo9TFS-PGFqQNzdF17NcnOtZmO-4bP5pKk4iUUXl1xNuydV7P3wNohyk0rlPty2dzRtC4ebqRNADHciCb_s9HDtRwLAMqi-vKRLuJ10kMRlncwfiI9V8SDavRCbqYzqyiNk2gQGge3Rsm5Sc4gw5QURsLAofDcRpeNMEhktGX3kyatto"
+          target="_blank" rel="noopener noreferrer">Odtwórz</a>
+      </div>
+    </article>
+
+    <article class="movie" data-title="spongebob klatwa pirata">
+      <div class="poster pirate">
+        <span class="tag">PRZYGODA</span>
+        <div class="symbol">⚓</div>
+        <div class="poster-title">Klątwa<br>pirata</div>
+      </div>
+      <div class="movie-info">
+        <h3>SpongeBob: Klątwa pirata</h3>
+        <p>Animacja · Online</p>
+        <a class="play"
+          href="https://play.ekino.link/Pf9edAUG-zGMu5grohP5mDKSek22LNto23vQ6JN_APTlhqTzMjRevXWwIGwjf8Uwa0ioMirge_AzzQONPrYHx-_BI9Tlocn4lFcXoRIi_qeYP8TUBqagPFRzGAH3jTfzVk4TYXrVaQM77z5QK-j2Y1Wh7eD_vomqjv84TmashDs7THzsbQ-ZHjm6Vi2zWsOWsfKXAwWMVzP03oo_Qe4UhhlZkdZ8AdA-8a3oEUz5FqhyAXLJuZKqgLwWoSPVwNVy004n5w-OKZMd3Xhbk7s_13TaIrB01mIvFfb1TlO9Re5KvxzuRInesqAIeQFYO_ws3sqfJbFNqqw1"
+          target="_blank" rel="noopener noreferrer">Odtwórz</a>
+      </div>
+    </article>
+
+    <article class="movie" data-title="plankton film">
+      <div class="poster plankton">
+        <span class="tag">ANIMACJA</span>
+        <div class="symbol">●</div>
+        <div class="poster-title">Plankton<br>Film</div>
+      </div>
+      <div class="movie-info">
+        <h3>Plankton: Film</h3>
+        <p>Animacja · Online</p>
+        <a class="play"
+          href="https://play.ekino.link/Dh7wBLX2bEBUI6Cf0O2cq8pVsTdSqsG2_aBpGQsDgpR21jaVwtHU7LdIpsGx8hq3fbURzNOck3R_OP9R6V9VBEZT-4RdvnoHNrmkkWZ6XslzMRmN_yaDlY_vlg0UwetzFuPrkLxzHRt6yRpCtyebh2xdxLreAOLvnHOO6meQn8zPQuTDsg5UTQYcvJVdSS-DdKNS0WcwLZtg01C5lAIkZ4IAgDYST7SHL_ThYWAzSbQX03bMHa9JD5N3uFB_ACBQr5XHMFtQUtH25Jm7xLrWEC1uuty1uow"
+          target="_blank" rel="noopener noreferrer">Odtwórz</a>
+      </div>
+    </article>
+
+  </section>
+
+  <p id="empty" class="empty">Nie znaleziono filmu o takiej nazwie.</p>
+</main>
+
+<footer>CinemaTOM · Twoja biblioteka filmów</footer>
+
+<script>
+const search = document.getElementById("search");
+const movies = [...document.querySelectorAll(".movie")];
+const empty = document.getElementById("empty");
+
+search.addEventListener("input", () => {
+  const query = search.value.trim().toLocaleLowerCase("pl");
+  let visible = 0;
+
+  movies.forEach(movie => {
+    const title = movie.dataset.title || "";
+    const matches = title.includes(query);
+    movie.style.display = matches ? "" : "none";
+    if (matches) visible++;
+  });
+
+  empty.style.display = visible ? "none" : "block";
+});
+</script>
+
+</body>
+</html>
